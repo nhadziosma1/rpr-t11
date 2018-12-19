@@ -1,5 +1,6 @@
 package ba.unsa.etf.rpr;
 
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -16,7 +17,10 @@ public class GeografijaDAO
 
     private GeografijaDAO()
     {
-        String url = "jdbc:sqlite:proba.db";
+        String url = "jdbc:sqlite:baza.db";
+
+        File db = new File("/baza.db");
+        boolean postojiLi = db.exists();
 
         try
         {
@@ -24,33 +28,58 @@ public class GeografijaDAO
             conn = DriverManager.getConnection(url);
             st = conn.createStatement();
 
-            /*PreparedStatement ps1 = conn.prepareStatement("INSERT INTO grad VALUES (1, Pariz, 1000000, 1");
-            PreparedStatement ps2 = conn.prepareStatement("INSERT INTO grad VALUES (2, London, 2000000, 2");
-            PreparedStatement ps3 = conn.prepareStatement("INSERT INTO grad VALUES (3, Beč, 3000000, 3");
-            PreparedStatement ps4 = conn.prepareStatement("INSERT INTO grad VALUES (4, Manchester, 5000000, 2");
-            PreparedStatement ps5 = conn.prepareStatement("INSERT INTO grad VALUES (5, Graz, 4000000, 3");
-
-            PreparedStatement ps6 = conn.prepareStatement("INSERT INTO drzava VALUES (1, Francuska, Pariz");
-            PreparedStatement ps7 = conn.prepareStatement("INSERT INTO drzava VALUES (1, UK, London");
-            PreparedStatement ps8 = conn.prepareStatement("INSERT INTO drzava VALUES (1, Austrija, Beč");
-
-            ResultSet rs = st.executeUpdate()*/
-
-
-            /*Statement stmt = conn.createStatement();
-            ResultSet result = stmt.executeQuery(upit);
-
-            float ukupno = 0;
-            while(result.next())
+            if(postojiLi==false)
             {
-                String naziv = result.getString(1);
-                float cijena = result.getFloat(2);
-                System.out.println (naziv + " " + cijena);
-                ukupno += cijena;
-            }
-            System.out.println("UKUPNO: "+ukupno);
-            conn.close();*/
+                PreparedStatement ps = conn.prepareStatement("INSERT INTO grad VALUES (?, ?, ?, ?)" ) ;
 
+                ps.setInt(1, 1);
+                ps.setString(2,"Pariz");
+                ps.setInt(3, 100000);
+                ps.setInt(4, 1);
+                ps.executeUpdate();
+
+                ps.setInt(1, 2);
+                ps.setString(2,"London");
+                ps.setInt(3, 200000);
+                ps.setInt(4, 2);
+                ps.executeUpdate();
+
+                ps.setInt(1, 3);
+                ps.setString(2,"Beč");
+                ps.setInt(3, 300000);
+                ps.setInt(4, 3);
+                ps.executeUpdate();
+
+                ps.setInt(1, 4);
+                ps.setString(2,"Manchester");
+                ps.setInt(3, 500000);
+                ps.setInt(4, 4);
+                ps.executeUpdate();
+
+                ps.setInt(1, 5);
+                ps.setString(2,"Graz");
+                ps.setInt(3, 10000);
+                ps.setInt(4, 5);
+                ps.executeUpdate();
+
+                PreparedStatement ps2 = conn.prepareStatement("INSERT INTO drzava VALUES (?, ?, ?)");
+
+                ps2.setInt(1, 1);
+                ps2.setString(2, "Francuska");
+                ps2.setInt(3, 1);
+                ps2.executeUpdate();
+
+                ps2.setInt(1, 2);
+                ps2.setString(2, "UK");
+                ps2.setInt(3, 2);
+                ps2.executeUpdate();
+
+                ps2.setInt(1, 3);
+                ps2.setString(2, "Austrija");
+                ps2.setInt(3, 3);
+                ps2.executeUpdate();
+            }
+            /*conn.close();     KADA ZATVARAM KONEKCIJU????????????*/
         }
         catch (SQLException e)
         {
@@ -215,7 +244,16 @@ public class GeografijaDAO
 
     void dodajDrzavu(Drzava d)
     {
-        String komanda= "INSERT INTO drzava VALUES ("+d.getId_drzave()+","+d.getNaziv()+","+d.getGlavniGrad().getId_grada()+")";
+        /*try
+        {
+            st = conn.createStatement();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }*/
+
+        String komanda= "INSERT INTO drzava VALUES ('"+d.getId_drzave()+"' ,'"+d.getNaziv()+"' ,'"+d.getGlavniGrad().getId_grada()+"')";
 
         try
         {

@@ -12,7 +12,8 @@ class GeografijaDAOTest
 {
 
     @Test
-    void regenerateFile() {
+    void regenerateFile()
+    {
         GeografijaDAO.removeInstance();
         File dbfile = new File("baza.db");
         dbfile.delete();
