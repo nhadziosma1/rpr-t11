@@ -1,6 +1,7 @@
 package ba.unsa.etf.rpr;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class GeografijaDAO
 {
@@ -31,7 +32,9 @@ public class GeografijaDAO
 
             PreparedStatement ps6 = conn.prepareStatement("INSERT INTO drzava VALUES (1, Francuska, Pariz");
             PreparedStatement ps7 = conn.prepareStatement("INSERT INTO drzava VALUES (1, UK, London");
-            PreparedStatement ps8 = conn.prepareStatement("INSERT INTO drzava VALUES (1, Austrija, Beč");*/
+            PreparedStatement ps8 = conn.prepareStatement("INSERT INTO drzava VALUES (1, Austrija, Beč");
+
+            ResultSet rs = st.executeUpdate()*/
 
 
             /*Statement stmt = conn.createStatement();
@@ -64,6 +67,11 @@ public class GeografijaDAO
         return instanca;
     }
 
+    public static void removeInstance()
+    {
+        instanca=null;
+    }
+
     Grad glavniGrad(String drzava)
     {
         Grad g = new Grad();
@@ -76,34 +84,198 @@ public class GeografijaDAO
             ResultSet rs = st.executeQuery(upit);
 
             g.setId_grada(rs.getInt(1));
-            g.setNaziv_grada( rs.getString(2) );
-            g.setBroj_stanovnika( rs.getInt(3));
+            g.setNaziv( rs.getString(2) );
+            g.setBrojStanovnika( rs.getInt(3));
 
-            int id_d = rs.getInt(4);
+            int id_drz_fk = rs.getInt(4);
 
-            String upit2 = "SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id='"+id_d+"'";
+            String upit2 = "SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id='"+id_drz_fk+"'";
             Drzava drz = new Drzava();
             rs = st.executeQuery(upit2);
 
             drz.setId_drzave(rs.getInt(1));
-            drz.setNaziv_drzave( rs.getString(1));
+            drz.setNaziv( rs.getString(1));
 
-            rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzva='"+id_d+"'");
+            rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzva='"+id_drz_fk+"'");
 
             Grad gg = new Grad();
 
             gg.setId_grada(rs.getInt(1));
-            gg.setNaziv_grada(rs.getString(2));
-            gg.setBroj_stanovnika(rs.getInt(3));
-            gg.setD(drz);
+            gg.setNaziv(rs.getString(2));
+            gg.setBrojStanovnika(rs.getInt(3));
+            gg.setDrzava(drz);
 
-            drz.setGlavni_grad(gg);
+            drz.setGlavniGrad(gg);
 
-            g.setD(drz);
+            g.setDrzava(drz);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return g;
+    }
+
+    void obrisiDrzavu(String drzava)
+    {
+        String komanda1 = "DELETE FROM drzava " +
+                          "WHERE naziv='"+drzava+"'";
+
+        String upit1 = "SELECT id FROM drzava WHERE naziv='"+drzava+"'";
+
+        try
+        {
+            st.executeUpdate(komanda1);
+
+            ResultSet rs = st.executeQuery(upit1);
+            int id_drzave = rs.getInt(1);
+
+            String upit2 = "SELECT id FROM grad WHERE drzava='"+id_drzave+"'";
+            rs = st.executeQuery(upit2);
+
+            while(rs.next())
+            {
+                String komanda2 = "DELETE FROM grad " +
+                                  "WHERE id='"+rs.getInt(1)+"'";
+
+                st.executeUpdate(komanda2);
+            }
         }
         catch (SQLException e)
         {
             e.printStackTrace();
         }
     }
+
+    ArrayList<Grad> gradovi()
+    {
+        ArrayList<Grad> alg = new ArrayList<>();
+
+        String upit1 = "SELECT * FROM grad";
+
+        try
+        {
+            ResultSet rs = st.executeQuery(upit1);
+
+            while(rs.next())
+            {
+                Grad g = new Grad();
+
+                g.setId_grada(rs.getInt(1));
+                g.setNaziv(rs.getString(2));
+                g.setBrojStanovnika(rs.getInt(3));
+
+                int id_drz_fk = rs.getInt(4);
+
+                String upit2 = "SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id='"+id_drz_fk+"'";
+                Drzava drz = new Drzava();
+                rs = st.executeQuery(upit2);
+
+                drz.setId_drzave(rs.getInt(1));
+                drz.setNaziv( rs.getString(1));
+
+                rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzva='"+id_drz_fk+"'");
+
+                Grad gg = new Grad();
+
+                gg.setId_grada(rs.getInt(1));
+                gg.setNaziv(rs.getString(2));
+                gg.setBrojStanovnika(rs.getInt(3));
+                gg.setDrzava(drz);
+
+                drz.setGlavniGrad(gg);
+
+                g.setDrzava(drz);
+
+                alg.add(g);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return alg;
+    }
+
+    void dodajGrad(Grad g)
+    {
+        String komanda= "INSERT INTO grad VALUES ("+g.getId_grada()+","+g.getNaziv()+","+g.getBrojStanovnika()+","+g.getDrzava().getId_drzave()+")";
+
+        try
+        {
+            st.executeUpdate(komanda);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    void dodajDrzavu(Drzava d)
+    {
+        String komanda= "INSERT INTO drzava VALUES ("+d.getId_drzave()+","+d.getNaziv()+","+d.getGlavniGrad().getId_grada()+")";
+
+        try
+        {
+            st.executeUpdate(komanda);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    void izmijeniGrad(Grad g)
+    {
+        String komanda = "UPDATE grad SET id=111, naziv=Breza, broj_stanovnika=10, drzava=3 " +
+                         "WHERE id='"+g.getId_grada()+"'";
+
+        try
+        {
+            st.executeUpdate(komanda);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    Drzava nadjiDrzavu(String d)
+    {
+        String upit1 = "SELECT * FROM drzava WHERE naziv='"+d+"'";
+
+        Drzava drz= new Drzava();
+
+        try
+        {
+            ResultSet rs = st.executeQuery(upit1);
+
+            drz.setId_drzave(rs.getInt(1));
+            drz.setNaziv(rs.getString(2));
+
+            int id_gr_fk = rs.getInt(3);
+
+            String upit2 = "SELECT * FROM grad WHERE id='"+id_gr_fk+"'";
+
+            rs = st.executeQuery(upit2);
+
+            Grad g = new Grad();
+
+            g.setId_grada( rs.getInt(1));
+            g.setNaziv( rs.getString(2));
+            g.setBrojStanovnika( rs.getInt(3));
+            g.setDrzava(drz);
+
+            drz.setGlavniGrad(g);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        return drz;
+    }
+
 }

@@ -14,19 +14,19 @@ public class Drzava
         this.id_drzave = id_drzave;
     }
 
-    public String getNaziv_drzave() {
+    public String getNaziv() {
         return naziv_drzave;
     }
 
-    public void setNaziv_drzave(String naziv_drzave) {
+    public void setNaziv(String naziv_drzave) {
         this.naziv_drzave = naziv_drzave;
     }
 
-    public Grad getGlavni_grad() {
+    public Grad getGlavniGrad() {
         return glavni_grad;
     }
 
-    public void setGlavni_grad(Grad glavni_grad) {
+    public void setGlavniGrad(Grad glavni_grad) {
         this.glavni_grad = glavni_grad;
     }
 }

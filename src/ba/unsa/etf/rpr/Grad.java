@@ -15,27 +15,27 @@ public class Grad
         this.id_grada = id_grada;
     }
 
-    public String getNaziv_grada() {
+    public String getNaziv() {
         return naziv_grada;
     }
 
-    public void setNaziv_grada(String naziv_grada) {
+    public void setNaziv(String naziv_grada) {
         this.naziv_grada = naziv_grada;
     }
 
-    public int getBroj_stanovnika() {
+    public int getBrojStanovnika() {
         return broj_stanovnika;
     }
 
-    public void setBroj_stanovnika(int broj_stanovnika) {
+    public void setBrojStanovnika(int broj_stanovnika) {
         this.broj_stanovnika = broj_stanovnika;
     }
 
-    public Drzava getD() {
+    public Drzava getDrzava() {
         return d;
     }
 
-    public void setD(Drzava d) {
+    public void setDrzava(Drzava d) {
         this.d = d;
     }
 }
