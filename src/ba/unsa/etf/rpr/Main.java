@@ -18,7 +18,7 @@ public class Main
 
     static String ispisiGradove()
     {
-        gdao.getInstance();
+        gdao = GeografijaDAO.getInstance();
 
         ArrayList<Grad> arl = gdao.gradovi();
 

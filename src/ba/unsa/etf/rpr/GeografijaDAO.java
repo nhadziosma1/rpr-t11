@@ -69,7 +69,7 @@ public class GeografijaDAO
 
             String unos8="INSERT INTO grad VALUES(5, 'Graz', 280200, 5)";
             Statement s_un8 = conn.createStatement();
-            s_un1.executeUpdate(unos1);
+            s_un8.executeUpdate(unos8);
 
             /*if(postojiLi==false)
             {
@@ -171,7 +171,7 @@ public class GeografijaDAO
             rs = st.executeQuery(upit2);
 
             drz.setId_drzave(rs.getInt(1));
-            drz.setNaziv( rs.getString(1));
+            drz.setNaziv( rs.getString(2));
 
             st = conn.createStatement();
             rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzava='"+id_drz_fk+"'");

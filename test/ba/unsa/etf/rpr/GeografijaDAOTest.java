@@ -24,7 +24,8 @@ class GeografijaDAOTest
     }
 
     @Test
-    void glavniGrad() {
+    void glavniGrad()
+    {
         GeografijaDAO dao = GeografijaDAO.getInstance();
         Grad nepoznat = dao.glavniGrad("Bosna i Hercegovina");
         assertNull(nepoznat);
@@ -33,7 +34,8 @@ class GeografijaDAOTest
     }
 
     @Test
-    void obrisiDrzavu() {
+    void obrisiDrzavu()
+    {
         GeografijaDAO dao = GeografijaDAO.getInstance();
         // Nepostojeća država, neće se desiti ništa
         dao.obrisiDrzavu("Kina");
@@ -43,7 +45,8 @@ class GeografijaDAOTest
     }
 
     @Test
-    void obrisiDrzavu2() {
+    void obrisiDrzavu2()
+    {
         GeografijaDAO dao = GeografijaDAO.getInstance();
 
         // Nema gradova Beč i Graz koji su iz austrije
@@ -57,7 +60,8 @@ class GeografijaDAOTest
     }
 
     @Test
-    void dodajGrad() {
+    void dodajGrad()
+    {
         GeografijaDAO dao = GeografijaDAO.getInstance();
         Drzava francuska = dao.nadjiDrzavu("Francuska");
         Grad grad = new Grad();
@@ -72,7 +76,8 @@ class GeografijaDAOTest
     }
 
     @Test
-    void dodajDrzavu() {
+    void dodajDrzavu()
+    {
         Grad sarajevo = new Grad();
         sarajevo.setNaziv("Sarajevo");
         sarajevo.setBrojStanovnika(500000);
@@ -93,7 +98,8 @@ class GeografijaDAOTest
     }
 
     @Test
-    void izmijeniGrad() {
+    void izmijeniGrad()
+    {
         GeografijaDAO dao = GeografijaDAO.getInstance();
         Grad bech = dao.glavniGrad("Austrija");
         bech.setNaziv("Vienna");
