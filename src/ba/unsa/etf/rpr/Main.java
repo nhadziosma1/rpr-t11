@@ -1,19 +1,30 @@
 package ba.unsa.etf.rpr;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main
+import static javafx.scene.control.PopupControl.USE_COMPUTED_SIZE;
+
+//import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
+
+public class Main extends Application
 {
     private static GeografijaDAO gdao;
 
     public static void main(String[] args)
     {
-        /*System.out.println("Gradovi su:\n" + ispisiGradove());
-        glavniGrad();*/
-        GeografijaDAO dao = GeografijaDAO.getInstance();
+
+        /*GeografijaDAO dao = GeografijaDAO.getInstance();
         ArrayList<Grad> gradovi = dao.gradovi();
-        System.out.println(gradovi.get(0).getNaziv()+" "+gradovi.get(2).getNaziv());
+        System.out.println(gradovi.get(0).getNaziv()+" "+gradovi.get(2).getNaziv());*/
+
+        launch(args);
     }
 
     static String ispisiGradove()
@@ -34,6 +45,25 @@ public class Main
 
     static void glavniGrad()
     {
+        System.out.println("Unesite ime drzave: ");
+        Scanner ulaz = new Scanner(System.in);
 
+        String drz = ulaz.nextLine();
+
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("grafika.fxml"));
+
+        /*
+        OVAJ DIO SE NE PIŠE KADA JE POVEZAN CONTROLLER SA FXMLOM KROZ FXML FAJL
+        loader.setController(new GrafikaController());
+         */
+        Parent root = loader.load();
+        primaryStage.setTitle("zadatak 2");
+        primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+        primaryStage.show();
     }
 }

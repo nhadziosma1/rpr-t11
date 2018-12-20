@@ -11,6 +11,8 @@ public class GeografijaDAO
     private Connection conn;
     private Statement st;
 
+    private PreparedStatement ps1, ps2, ps3, ps4, ps5, ps6, sp7;
+
     private static void initialize()
     {
         instanca = new GeografijaDAO();
@@ -18,6 +20,23 @@ public class GeografijaDAO
 
     private GeografijaDAO()
     {
+        //napravi PreparedStatemente
+
+        try
+        {
+            ps1 = conn.prepareStatement("INSERT INTO grad VALUES (?, ?, ?, ?)" );
+            ps2 = conn.prepareStatement("INSERT INTO drzava VALUES (?, ?, ?)");
+            ps3 = conn.prepareStatement("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM drzava d," +
+                    " grad g WHERE g.id=d.glavni_grad AND d.naziv=?");
+
+            ps4 = conn.prepareStatement("SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id=?");
+            ps5 = conn.prepareStatement()
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
         String url = "jdbc:sqlite:baza.db";
 
         File db = new File("/baza.db");
@@ -26,50 +45,54 @@ public class GeografijaDAO
         try
         {
             //Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection(url);
-            st = conn.createStatement();
 
-            //brise sve iz tabela
-            String brisi_sve_grad = "DELETE FROM grad";
-            Statement st0 = conn.createStatement();
-            st0.executeUpdate(brisi_sve_grad);
+            if(postojiLi==false)
+            {
+                conn = DriverManager.getConnection(url);
+                st = conn.createStatement();
 
-            String brisi_sve_drzava = "DELETE FROM drzava";
-            Statement st01 = conn.createStatement();
-            st01.executeUpdate(brisi_sve_drzava);
+                //brise sve iz tabela
+                String brisi_sve_grad = "DELETE FROM grad";
+                Statement st0 = conn.createStatement();
+                st0.executeUpdate(brisi_sve_grad);
 
-            //ubacuje ponovo u tabele
-            String unos1="INSERT INTO drzava VALUES(3, 'Francuska', 1)";
-            Statement s_un1 = conn.createStatement();
-            s_un1.executeUpdate(unos1);
+                String brisi_sve_drzava = "DELETE FROM drzava";
+                Statement st01 = conn.createStatement();
+                st01.executeUpdate(brisi_sve_drzava);
 
-            String unos2="INSERT INTO drzava VALUES(4, 'Velika Britanija', 2)";
-            Statement s_un2 = conn.createStatement();
-            s_un2.executeUpdate(unos2);
+                //ubacuje ponovo u tabele
+                String unos1="INSERT INTO drzava VALUES(3, 'Francuska', 1)";
+                Statement s_un1 = conn.createStatement();
+                s_un1.executeUpdate(unos1);
 
-            String unos3="INSERT INTO drzava VALUES(5, 'Austrija', 3)";
-            Statement s_un3 = conn.createStatement();
-            s_un3.executeUpdate(unos3);
+                String unos2="INSERT INTO drzava VALUES(4, 'Velika Britanija', 2)";
+                Statement s_un2 = conn.createStatement();
+                s_un2.executeUpdate(unos2);
 
-            String unos4="INSERT INTO grad VALUES(1, 'Pariz', 2206488, 3)";
-            Statement s_un4 = conn.createStatement();
-            s_un4.executeUpdate(unos4);
+                String unos3="INSERT INTO drzava VALUES(5, 'Austrija', 3)";
+                Statement s_un3 = conn.createStatement();
+                s_un3.executeUpdate(unos3);
 
-            String unos5="INSERT INTO grad VALUES(2, 'London', 8825000, 4)";
-            Statement s_un5 = conn.createStatement();
-            s_un5.executeUpdate(unos5);
+                String unos4="INSERT INTO grad VALUES(1, 'Pariz', 2206488, 3)";
+                Statement s_un4 = conn.createStatement();
+                s_un4.executeUpdate(unos4);
 
-            String unos6="INSERT INTO grad VALUES(3, 'Beč', 1899055, 5)";
-            Statement s_un6 = conn.createStatement();
-            s_un6.executeUpdate(unos6);
+                String unos5="INSERT INTO grad VALUES(2, 'London', 8825000, 4)";
+                Statement s_un5 = conn.createStatement();
+                s_un5.executeUpdate(unos5);
 
-            String unos7="INSERT INTO grad VALUES(4, 'Manchester', 545500, 4)";
-            Statement s_un7 = conn.createStatement();
-            s_un7.executeUpdate(unos7);
+                String unos6="INSERT INTO grad VALUES(3, 'Beč', 1899055, 5)";
+                Statement s_un6 = conn.createStatement();
+                s_un6.executeUpdate(unos6);
 
-            String unos8="INSERT INTO grad VALUES(5, 'Graz', 280200, 5)";
-            Statement s_un8 = conn.createStatement();
-            s_un8.executeUpdate(unos8);
+                String unos7="INSERT INTO grad VALUES(4, 'Manchester', 545500, 4)";
+                Statement s_un7 = conn.createStatement();
+                s_un7.executeUpdate(unos7);
+
+                String unos8="INSERT INTO grad VALUES(5, 'Graz', 280200, 5)";
+                Statement s_un8 = conn.createStatement();
+                s_un8.executeUpdate(unos8);
+            }
 
             /*if(postojiLi==false)
             {
@@ -122,6 +145,7 @@ public class GeografijaDAO
                 ps2.setInt(3, 3);
                 ps2.executeUpdate();
             }*/
+
             /*conn.close();     KADA ZATVARAM KONEKCIJU????????????*/
         }
         catch (SQLException e)

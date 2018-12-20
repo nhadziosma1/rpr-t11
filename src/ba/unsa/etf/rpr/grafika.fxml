@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Button?>
+
+<BorderPane fx:controller="ba.unsa.etf.rpr.GrafikaController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <top>
+        <GridPane>
+            <Label fx:id="lbGgrad" text="Unesite glavni grad"/>
+            <TextField fx:id="tfGGrad" GridPane.columnIndex="1"/>
+            <Button fx:id="bGGnadji" onAction="#NadjiGlavniGrad" GridPane.rowIndex="0" GridPane.columnIndex="3" text="NADJI"/>
+
+            <Label fx:id="lbObr" text="Unesi drzavu koju zelite obrisati" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+            <TextField fx:id="tfObrisi" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <Button fx:id="bObrisi" onAction="#ObrisiDrzvuINjeneGradove" GridPane.rowIndex="1" GridPane.columnIndex="3" text="OBRISI"/>
+        </GridPane>
+    </top>
+
+    <center>
+        <Label fx:id="izvrseno" text=" "/>
+        <!--<TableView fx:id="tvSpisak">
+        </TableView>-->
+    </center>
+
+    <padding>
+        <Insets top="20" bottom="20" right="20" left="20"/>
+    </padding>
+</BorderPane>
