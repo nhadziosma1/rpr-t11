@@ -28,7 +28,7 @@ public class GeografijaDAO
             conn = DriverManager.getConnection(url);
             st = conn.createStatement();
 
-            if(postojiLi==false)
+            /*if(postojiLi==false)
             {
                 PreparedStatement ps = conn.prepareStatement("INSERT INTO grad VALUES (?, ?, ?, ?)" ) ;
 
@@ -78,7 +78,7 @@ public class GeografijaDAO
                 ps2.setString(2, "Austrija");
                 ps2.setInt(3, 3);
                 ps2.executeUpdate();
-            }
+            }*/
             /*conn.close();     KADA ZATVARAM KONEKCIJU????????????*/
         }
         catch (SQLException e)
@@ -105,11 +105,14 @@ public class GeografijaDAO
     {
         Grad g = new Grad();
 
-        String upit = "SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM drzava d," +
-                      " grad g WHERE g.id=d.glavni_grad AND d.naziv='"+drzava+"'";
-
         try
         {
+            st = conn.createStatement();
+
+            String upit = "SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM drzava d," +
+                          " grad g WHERE g.id=d.glavni_grad AND d.naziv='"+drzava+"'";
+
+
             ResultSet rs = st.executeQuery(upit);
 
             g.setId_grada(rs.getInt(1));
@@ -118,6 +121,8 @@ public class GeografijaDAO
 
             int id_drz_fk = rs.getInt(4);
 
+
+            st = conn.createStatement();
             String upit2 = "SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id='"+id_drz_fk+"'";
             Drzava drz = new Drzava();
             rs = st.executeQuery(upit2);
@@ -125,7 +130,8 @@ public class GeografijaDAO
             drz.setId_drzave(rs.getInt(1));
             drz.setNaziv( rs.getString(1));
 
-            rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzva='"+id_drz_fk+"'");
+            st = conn.createStatement();
+            rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzava='"+id_drz_fk+"'");
 
             Grad gg = new Grad();
 
@@ -148,23 +154,26 @@ public class GeografijaDAO
 
     void obrisiDrzavu(String drzava)
     {
-        String komanda1 = "DELETE FROM drzava " +
-                          "WHERE naziv='"+drzava+"'";
-
-        String upit1 = "SELECT id FROM drzava WHERE naziv='"+drzava+"'";
-
         try
         {
+            st = conn.createStatement();
+            String komanda1 = "DELETE FROM drzava " +
+                              "WHERE naziv='"+drzava+"'";
             st.executeUpdate(komanda1);
+
+            st = conn.createStatement();
+            String upit1 = "SELECT id FROM drzava WHERE naziv='"+drzava+"'";
 
             ResultSet rs = st.executeQuery(upit1);
             int id_drzave = rs.getInt(1);
 
+            st = conn.createStatement();
             String upit2 = "SELECT id FROM grad WHERE drzava='"+id_drzave+"'";
             rs = st.executeQuery(upit2);
 
             while(rs.next())
             {
+                st = conn.createStatement();
                 String komanda2 = "DELETE FROM grad " +
                                   "WHERE id='"+rs.getInt(1)+"'";
 
@@ -177,14 +186,15 @@ public class GeografijaDAO
         }
     }
 
-    ArrayList<Grad> gradovi()
+    public ArrayList<Grad> gradovi()
     {
         ArrayList<Grad> alg = new ArrayList<>();
 
-        String upit1 = "SELECT * FROM grad";
-
         try
         {
+            st = conn.createStatement();
+            String upit1 = "SELECT * FROM grad";
+
             ResultSet rs = st.executeQuery(upit1);
 
             while(rs.next())
@@ -197,20 +207,22 @@ public class GeografijaDAO
 
                 int id_drz_fk = rs.getInt(4);
 
+                Statement st2 = conn.createStatement();
                 String upit2 = "SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id='"+id_drz_fk+"'";
                 Drzava drz = new Drzava();
-                rs = st.executeQuery(upit2);
+                ResultSet rs2 = st2.executeQuery(upit2);
 
-                drz.setId_drzave(rs.getInt(1));
-                drz.setNaziv( rs.getString(1));
+                drz.setId_drzave(rs2.getInt(1));
+                drz.setNaziv( rs2.getString(2));
 
-                rs = st.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzva='"+id_drz_fk+"'");
+                Statement st3 = conn.createStatement();
+                ResultSet rs3 = st3.executeQuery("SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava FROM grad g, drzava d WHERE g.drzava='"+id_drz_fk+"'");
 
                 Grad gg = new Grad();
 
-                gg.setId_grada(rs.getInt(1));
-                gg.setNaziv(rs.getString(2));
-                gg.setBrojStanovnika(rs.getInt(3));
+                gg.setId_grada(rs3.getInt(1));
+                gg.setNaziv(rs3.getString(2));
+                gg.setBrojStanovnika(rs3.getInt(3));
                 gg.setDrzava(drz);
 
                 drz.setGlavniGrad(gg);
@@ -230,10 +242,12 @@ public class GeografijaDAO
 
     void dodajGrad(Grad g)
     {
-        String komanda= "INSERT INTO grad VALUES ("+g.getId_grada()+","+g.getNaziv()+","+g.getBrojStanovnika()+","+g.getDrzava().getId_drzave()+")";
-
         try
         {
+            st = conn.createStatement();
+            String komanda= "INSERT INTO grad VALUES ("+g.getId_grada()+","+g.getNaziv()+","+g.getBrojStanovnika()+","+g.getDrzava().getId_drzave()+")";
+
+
             st.executeUpdate(komanda);
         }
         catch (SQLException e)
@@ -244,19 +258,11 @@ public class GeografijaDAO
 
     void dodajDrzavu(Drzava d)
     {
-        /*try
-        {
-            st = conn.createStatement();
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-        }*/
-
-        String komanda= "INSERT INTO drzava VALUES ('"+d.getId_drzave()+"' ,'"+d.getNaziv()+"' ,'"+d.getGlavniGrad().getId_grada()+"')";
-
         try
         {
+            st = conn.createStatement();
+            String komanda= "INSERT INTO drzava VALUES ('"+d.getId_drzave()+"' ,'"+d.getNaziv()+"' ,'"+d.getGlavniGrad().getId_grada()+"')";
+
             st.executeUpdate(komanda);
         }
         catch (SQLException e)
@@ -267,11 +273,12 @@ public class GeografijaDAO
 
     void izmijeniGrad(Grad g)
     {
-        String komanda = "UPDATE grad SET id=111, naziv=Breza, broj_stanovnika=10, drzava=3 " +
-                         "WHERE id='"+g.getId_grada()+"'";
-
         try
         {
+            st = conn.createStatement();
+            String komanda = "UPDATE grad SET naziv='"+g.getNaziv()+"', broj_stanovnika='"+g.getBrojStanovnika()+"', drzava='"+g.getDrzava().getId_drzave()+"'" +
+                    " WHERE id='"+g.getId_grada()+"'";
+
             st.executeUpdate(komanda);
         }
         catch (SQLException e)
@@ -282,12 +289,14 @@ public class GeografijaDAO
 
     Drzava nadjiDrzavu(String d)
     {
-        String upit1 = "SELECT * FROM drzava WHERE naziv='"+d+"'";
 
         Drzava drz= new Drzava();
 
         try
         {
+            st = conn.createStatement();
+            String upit1 = "SELECT * FROM drzava WHERE naziv='"+d+"'";
+
             ResultSet rs = st.executeQuery(upit1);
 
             drz.setId_drzave(rs.getInt(1));
@@ -295,6 +304,7 @@ public class GeografijaDAO
 
             int id_gr_fk = rs.getInt(3);
 
+            st = conn.createStatement();
             String upit2 = "SELECT * FROM grad WHERE id='"+id_gr_fk+"'";
 
             rs = st.executeQuery(upit2);
