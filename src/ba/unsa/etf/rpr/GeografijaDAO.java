@@ -3,6 +3,7 @@ package ba.unsa.etf.rpr;
 import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public class GeografijaDAO
 {
@@ -27,6 +28,48 @@ public class GeografijaDAO
             //Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(url);
             st = conn.createStatement();
+
+            //brise sve iz tabela
+            String brisi_sve_grad = "DELETE FROM grad";
+            Statement st0 = conn.createStatement();
+            st0.executeUpdate(brisi_sve_grad);
+
+            String brisi_sve_drzava = "DELETE FROM drzava";
+            Statement st01 = conn.createStatement();
+            st01.executeUpdate(brisi_sve_drzava);
+
+            //ubacuje ponovo u tabele
+            String unos1="INSERT INTO drzava VALUES(3, 'Francuska', 1)";
+            Statement s_un1 = conn.createStatement();
+            s_un1.executeUpdate(unos1);
+
+            String unos2="INSERT INTO drzava VALUES(4, 'Velika Britanija', 2)";
+            Statement s_un2 = conn.createStatement();
+            s_un2.executeUpdate(unos2);
+
+            String unos3="INSERT INTO drzava VALUES(5, 'Austrija', 3)";
+            Statement s_un3 = conn.createStatement();
+            s_un3.executeUpdate(unos3);
+
+            String unos4="INSERT INTO grad VALUES(1, 'Pariz', 2206488, 3)";
+            Statement s_un4 = conn.createStatement();
+            s_un4.executeUpdate(unos4);
+
+            String unos5="INSERT INTO grad VALUES(2, 'London', 8825000, 4)";
+            Statement s_un5 = conn.createStatement();
+            s_un5.executeUpdate(unos5);
+
+            String unos6="INSERT INTO grad VALUES(3, 'Beč', 1899055, 5)";
+            Statement s_un6 = conn.createStatement();
+            s_un6.executeUpdate(unos6);
+
+            String unos7="INSERT INTO grad VALUES(4, 'Manchester', 545500, 4)";
+            Statement s_un7 = conn.createStatement();
+            s_un7.executeUpdate(unos7);
+
+            String unos8="INSERT INTO grad VALUES(5, 'Graz', 280200, 5)";
+            Statement s_un8 = conn.createStatement();
+            s_un1.executeUpdate(unos1);
 
             /*if(postojiLi==false)
             {
@@ -146,7 +189,8 @@ public class GeografijaDAO
         }
         catch (SQLException e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
+            return null;
         }
 
         return g;
@@ -156,29 +200,42 @@ public class GeografijaDAO
     {
         try
         {
+            /*String str_pomocni = "INSERT INTO drzava (id, naziv, glavni_grad) VALUES (5, 'Austrija', 3)";
+            Statement st_pomocni = conn.createStatement();
+            st_pomocni.executeUpdate(str_pomocni);*/
+
+            Statement st2 = conn.createStatement();
+            String upit1 = "SELECT id FROM drzava WHERE naziv='"+drzava+"'";
+
+            ResultSet rs2 = st2.executeQuery(upit1);
+            int id_drzave = rs2.getInt(1);
+
             st = conn.createStatement();
             String komanda1 = "DELETE FROM drzava " +
                               "WHERE naziv='"+drzava+"'";
             st.executeUpdate(komanda1);
 
-            st = conn.createStatement();
-            String upit1 = "SELECT id FROM drzava WHERE naziv='"+drzava+"'";
-
-            ResultSet rs = st.executeQuery(upit1);
-            int id_drzave = rs.getInt(1);
-
-            st = conn.createStatement();
+            Statement st3 = conn.createStatement();
             String upit2 = "SELECT id FROM grad WHERE drzava='"+id_drzave+"'";
-            rs = st.executeQuery(upit2);
+            ResultSet rs3 = st3.executeQuery(upit2);
 
-            while(rs.next())
+            while(rs3.next())
             {
-                st = conn.createStatement();
+                Statement st4 = conn.createStatement();
                 String komanda2 = "DELETE FROM grad " +
-                                  "WHERE id='"+rs.getInt(1)+"'";
+                                  "WHERE id='"+rs3.getInt(1)+"'";
 
-                st.executeUpdate(komanda2);
+                st4.executeUpdate(komanda2);
             }
+
+            /*String str_pomocni2 = "INSERT INTO drzava (id, naziv, glavni_grad) VALUES (5, 'Austrija', 3)";
+            Statement st_pomocni2 = conn.createStatement();
+            st_pomocni2.executeUpdate(str_pomocni2);
+
+            String str_pomocni3 = "INSERT INTO drzava (id, naziv, glavni_grad) VALUES (5, 'Austrija', 3)";
+            Statement st_pomocni3 = conn.createStatement();
+            st_pomocni3.executeUpdate(str_pomocni3);
+            */
         }
         catch (SQLException e)
         {
@@ -237,6 +294,12 @@ public class GeografijaDAO
             e.printStackTrace();
         }
 
+        TreeSet<Grad> tsg =new TreeSet<>();
+        tsg.addAll(alg);
+
+        alg.clear();
+        alg.addAll(tsg);
+
         return alg;
     }
 
@@ -245,8 +308,7 @@ public class GeografijaDAO
         try
         {
             st = conn.createStatement();
-            String komanda= "INSERT INTO grad VALUES ("+g.getId_grada()+","+g.getNaziv()+","+g.getBrojStanovnika()+","+g.getDrzava().getId_drzave()+")";
-
+            String komanda= "INSERT INTO grad VALUES ('"+g.getId_grada()+"','"+g.getNaziv()+"','"+g.getBrojStanovnika()+"', '"+g.getDrzava().getId_drzave()+"')";
 
             st.executeUpdate(komanda);
         }
