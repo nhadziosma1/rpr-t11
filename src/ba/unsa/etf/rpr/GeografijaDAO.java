@@ -300,12 +300,6 @@ public class GeografijaDAO
             {
                 brisiGradPoId.setInt(1, rs3.getInt("id"));
                 brisiGradPoId.executeUpdate();
-
-                /*Statement st4 = conn.createStatement();
-                String komanda2 = "DELETE FROM grad " +
-                                  "WHERE id='"+rs3.getInt(1)+"'";
-
-                st4.executeUpdate(komanda2);*/
             }
         }
         catch (SQLException e)

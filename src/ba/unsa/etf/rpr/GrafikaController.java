@@ -110,6 +110,7 @@ public class GrafikaController implements Initializable
             gdo.obrisiDrzavu(d.getNaziv());
 
             izvrseno.setText("Dzrzava "+d.getNaziv()+" i njeni gradovi su izbrisani iz baze!");
+            System.out.println("Broj gradova nakon izbacivanja drzave "+d.getNaziv()+" "+gdo.gradovi().size());
         }
 
 
