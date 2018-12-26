@@ -272,7 +272,7 @@ public class GeografijaDAO
             traziDrzavuPoNazivu.setString(1,drzava);
 
             ResultSet rs2 = traziDrzavuPoNazivu.executeQuery();
-            int id_drzave = rs2.getInt("id");
+            int id_drzave = rs2.getInt(1);
 
             /*st = conn.createStatement();
             String komanda1 = "DELETE FROM drzava " +
@@ -310,6 +310,7 @@ public class GeografijaDAO
         }
         catch (SQLException e)
         {
+            e.getMessage();
             e.printStackTrace();
         }
     }
@@ -398,6 +399,8 @@ public class GeografijaDAO
             dodajGrad.setInt(3, g.getBrojStanovnika());
             dodajGrad.setInt(4, g.getDrzava().getId_drzave());
 
+            dodajGrad.executeUpdate();
+
             /*st = conn.createStatement();
             String komanda= "INSERT INTO grad VALUES ('"+g.getId_grada()+"','"+g.getNaziv()+"','"+g.getBrojStanovnika()+"', '"+g.getDrzava().getId_drzave()+"')";
 
@@ -421,7 +424,8 @@ public class GeografijaDAO
             dodajDarzavu.setInt(1, d.getId_drzave());
             dodajDarzavu.setString(2, d.getNaziv());
             dodajDarzavu.setInt( 3, d.getGlavniGrad().getId_grada() );
-            dodajDarzavu.executeQuery();
+
+            dodajDarzavu.executeUpdate();
         }
         catch (SQLException e)
         {
