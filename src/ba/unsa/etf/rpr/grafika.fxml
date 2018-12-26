@@ -11,7 +11,8 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Button?>
 
-<BorderPane fx:controller="ba.unsa.etf.rpr.GrafikaController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.TableColumn?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <GridPane>
             <Label fx:id="lbGgrad" text="Unesite glavni grad"/>
@@ -25,10 +26,29 @@
     </top>
 
     <center>
-        <Label fx:id="izvrseno" text=" "/>
-        <!--<TableView fx:id="tvSpisak">
-        </TableView>-->
+        <GridPane>
+            <TableView fx:id="tvGradova"  maxHeight="120" GridPane.rowIndex="1">
+                <columns>
+                    <TableColumn fx:id="tcIdGrada" text="id grada" prefWidth="150" />
+                    <TableColumn fx:id="tcNazivGrada" text="naziv grada" prefWidth="150"/>
+                    <TableColumn fx:id="tcBrojStanovnika" text="broj stanovnika" prefWidth="150"/>
+                    <TableColumn fx:id="tcIdOdgovoarajuceDrzave" text="id drzave" prefWidth="150"/>
+                </columns>
+            </TableView>
+
+            <TableView fx:id="tvDrzava" maxHeight="120" GridPane.rowIndex="15">
+                <columns>
+                    <TableColumn fx:id="tcIdDrzave" text="id drzave" prefWidth="150" />
+                    <TableColumn fx:id="tcNazivDrzave" text="naziv drzave" prefWidth="150"/>
+                    <TableColumn fx:id="tcIdGlavnogGrada" text="id grada"  prefWidth="150"/>
+                </columns>
+            </TableView>
+        </GridPane>
     </center>
+
+    <bottom>
+        <Label fx:id="izvrseno" text=" "/>
+    </bottom>
 
     <padding>
         <Insets top="20" bottom="20" right="20" left="20"/>

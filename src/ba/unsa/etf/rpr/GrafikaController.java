@@ -1,22 +1,70 @@
 package ba.unsa.etf.rpr;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.sql.Connection;
+import java.net.URL;
+import java.sql.Statement;
+import java.util.ResourceBundle;
 
-public class GrafikaController
+public class GrafikaController implements Initializable
 {
     public TextField tfGGrad;
     public TextField tfObrisi;
     public Label izvrseno;
 
+    public TableView<Grad> tvGradova;
+    //kolone tabele
+    public TableColumn tcIdGrada;
+    public TableColumn tcNazivGrada;
+    public TableColumn tcBrojStanovnika;
+    public TableColumn tcIdOdgovoarajuceDrzave;
+
+    public TableView<Drzava> tvDrzava;
+    //kolone tabele2
+    public TableColumn tcIdDrzave;
+    public TableColumn tcNazivDrzave;
+    public TableColumn tcIdGlavnogGrada;
+
+    private ObservableList<Grad> listaGradova;
+    private ObservableList<Drzava> listaDrzava;
+
+    //ovo ga cini Modelom
+    private GeografijaDAO gdo;
+
+    GrafikaController(GeografijaDAO gdooo)
+    {
+        listaDrzava = FXCollections.observableArrayList();
+        listaGradova = FXCollections.observableArrayList();
+
+        gdo=gdooo;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources)
+    {
+        tcIdGrada.setCellValueFactory(new PropertyValueFactory<>("id_grada"));
+        tcNazivGrada.setCellValueFactory(new PropertyValueFactory<>("naziv_grada"));
+        tcBrojStanovnika.setCellValueFactory(new PropertyValueFactory<>("broj_stanovnika"));
+
+        tcNazivDrzave.setCellValueFactory(new PropertyValueFactory<>("naziv_drzave"));
+        tcIdDrzave.setCellValueFactory(new PropertyValueFactory<>("id_drzave"));
+
+        listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
+        listaDrzava.addAll(FXCollections.observableArrayList(gdo.drzave()));
+
+        tvDrzava.setItems(listaDrzava);
+        tvGradova.setItems(listaGradova);
+    }
+
+
     public void NadjiGlavniGrad(ActionEvent actionEvent)
     {
-        GeografijaDAO gdo = GeografijaDAO.getInstance();
-
         Grad gg = gdo.glavniGrad( tfGGrad.getText() );
 
         if( tfGGrad.getText().isEmpty())
@@ -41,8 +89,6 @@ public class GrafikaController
 
     public void ObrisiDrzvuINjeneGradove(ActionEvent actionEvent)
     {
-        GeografijaDAO gdo = GeografijaDAO.getInstance();
-
         if(tfObrisi.getText().isEmpty() )
         {
             Alert upozori = new Alert(Alert.AlertType.WARNING);
@@ -50,14 +96,15 @@ public class GrafikaController
             upozori.setContentText("Niste unijeli drzavu u namjenjeno polje!");
             upozori.showAndWait();
         }
-        else if(true)
-        {
-
-        }
         else
         {
+            Drzava d = gdo.nadjiDrzavu(tfObrisi.getText());
+            gdo.obrisiDrzavu(d.getNaziv());
+
             izvrseno.setText("Dzrazava i njeni gradovi su izbrisani iz baze");
         }
+
+
 
     }
 }

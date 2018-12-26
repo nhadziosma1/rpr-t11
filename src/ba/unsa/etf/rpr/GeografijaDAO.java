@@ -12,8 +12,6 @@ public class GeografijaDAO
     private Connection conn;
     private Statement st;
 
-    private PreparedStatement ps1, ps2, ps3, ps4, ps5, ps6, sp7;
-
     private static void initialize()
     {
         instanca = new GeografijaDAO();
@@ -283,16 +281,16 @@ public class GeografijaDAO
                     ("DELETE FROM drzava " +
                     "WHERE naziv=?");
             brisiDrzavePoNazivu.setString(1, drzava);
-            brisiDrzavePoNazivu.executeQuery();
+            brisiDrzavePoNazivu.executeUpdate();
 
             /*Statement st3 = conn.createStatement();
             String upit2 = "SELECT id FROM grad WHERE drzava='"+id_drzave+"'";
             ResultSet rs3 = st3.executeQuery(upit2);*/
 
-            PreparedStatement traziDrzavaPoId = conn.prepareStatement
-                    ("SELECT d.id, d.naziv, d.glavni_grad FROM drzava d WHERE d.id=?");
-            traziDrzavaPoId.setInt(1, id_drzave);
-            ResultSet rs3 = traziDrzavaPoId.executeQuery();
+            PreparedStatement traziGradPoIdDrzave = conn.prepareStatement
+                    ("SELECT id FROM grad g WHERE g.drzava=?");
+            traziGradPoIdDrzave.setInt(1, id_drzave);
+            ResultSet rs3 = traziGradPoIdDrzave.executeQuery();
 
             PreparedStatement brisiGradPoId = conn.prepareStatement
                     ("DELETE FROM grad " +
@@ -301,6 +299,8 @@ public class GeografijaDAO
             while(rs3.next())
             {
                 brisiGradPoId.setInt(1, rs3.getInt("id"));
+                brisiGradPoId.executeUpdate();
+
                 /*Statement st4 = conn.createStatement();
                 String komanda2 = "DELETE FROM grad " +
                                   "WHERE id='"+rs3.getInt(1)+"'";
@@ -389,6 +389,59 @@ public class GeografijaDAO
         return alg;
     }
 
+    public ArrayList<Drzava> drzave()
+    {
+        ArrayList<Drzava> alg = new ArrayList<>();
+
+        try
+        {
+            st = conn.createStatement();
+            String upit1 = "SELECT * FROM drzava";
+
+            ResultSet rs = st.executeQuery(upit1);
+
+            while(rs.next())
+            {
+                Drzava d = new Drzava();
+
+                d.setId_drzave(rs.getInt("id"));
+                d.setNaziv( rs.getString("naziv"));
+                //d.setGlavniGrad( rs.getString("grad"));
+
+                int id_gl_gr = rs.getInt("glavni_grad");
+
+                PreparedStatement traziDrzavaPoId = conn.prepareStatement
+                        ("SELECT * FROM grad g WHERE g.id=?");
+                traziDrzavaPoId.setInt(1, id_gl_gr);
+                ResultSet rs2 = traziDrzavaPoId.executeQuery();
+
+                Grad g = new Grad();
+
+                g.setId_grada( rs2.getInt("id"));
+                g.setBrojStanovnika( rs2.getInt("broj_stanovnika"));
+                g.setNaziv( rs2.getString("naziv"));
+
+                g.setDrzava(d);
+
+                d.setGlavniGrad(g);
+
+                alg.add(d);
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        TreeSet<Drzava> tsg =new TreeSet<>();
+        tsg.addAll(alg);
+
+        alg.clear();
+        alg.addAll(tsg);
+
+        return alg;
+    }
+
     void dodajGrad(Grad g)
     {
         try
@@ -445,7 +498,7 @@ public class GeografijaDAO
             promijeniGrad.setInt(3, g.getDrzava().getId_drzave());
             promijeniGrad.setInt(4, g.getId_grada());
 
-            promijeniGrad.executeQuery();
+            promijeniGrad.executeUpdate();
             /*st = conn.createStatement();
             String komanda = "UPDATE grad SET naziv='"+g.getNaziv()+"', broj_stanovnika='"+g.getBrojStanovnika()+"', drzava='"+g.getDrzava().getId_drzave()+"'" +
                     " WHERE id='"+g.getId_grada()+"'";

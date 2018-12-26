@@ -61,6 +61,9 @@ public class Main extends Application
         OVAJ DIO SE NE PIŠE KADA JE POVEZAN CONTROLLER SA FXMLOM KROZ FXML FAJL
         loader.setController(new GrafikaController());
          */
+        GeografijaDAO gdo = GeografijaDAO.getInstance();
+
+        loader.setController(new GrafikaController(gdo));
         Parent root = loader.load();
         primaryStage.setTitle("zadatak 2");
         primaryStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
