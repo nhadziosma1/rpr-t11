@@ -114,31 +114,31 @@ public class GeografijaDAO
 
                 ps.setInt(1, 1);
                 ps.setString(2,"Pariz");
-                ps.setInt(3, 100000);
+                ps.setInt(3, 2206488);
                 ps.setInt(4, 1);
                 ps.executeUpdate();
 
                 ps.setInt(1, 2);
                 ps.setString(2,"London");
-                ps.setInt(3, 200000);
+                ps.setInt(3, 8825000);
                 ps.setInt(4, 2);
                 ps.executeUpdate();
 
                 ps.setInt(1, 3);
                 ps.setString(2,"Beč");
-                ps.setInt(3, 300000);
+                ps.setInt(3, 1899055);
                 ps.setInt(4, 3);
                 ps.executeUpdate();
 
                 ps.setInt(1, 4);
                 ps.setString(2,"Manchester");
-                ps.setInt(3, 500000);
+                ps.setInt(3, 545500);
                 ps.setInt(4, 2);
                 ps.executeUpdate();
 
                 ps.setInt(1, 5);
                 ps.setString(2,"Graz");
-                ps.setInt(3, 10000);
+                ps.setInt(3, 280200);
                 ps.setInt(4, 3);
                 ps.executeUpdate();
 
@@ -356,7 +356,7 @@ public class GeografijaDAO
 
                 PreparedStatement traziGradPoDrzavi = conn.prepareStatement(
                         "SELECT g.id, g.naziv, g.broj_stanovnika, g.drzava " +
-                             "FROM grad g WHERE g.drzava=?");
+                             "FROM grad g, drzava d WHERE g.drzava=d.id AND d.glavni_grad=g.id AND  g.drzava=?");
                 traziGradPoDrzavi.setInt(1, id_drz_fk);
 
                 ResultSet rs3 = traziGradPoDrzavi.executeQuery();
