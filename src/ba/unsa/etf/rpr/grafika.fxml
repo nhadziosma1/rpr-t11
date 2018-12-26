@@ -15,7 +15,7 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <GridPane>
-            <Label fx:id="lbGgrad" text="Unesite glavni grad"/>
+            <Label fx:id="lbGgrad" text="Unesite drzavu ciji zelite glavni grad:"/>
             <TextField fx:id="tfGGrad" GridPane.columnIndex="1"/>
             <Button fx:id="bGGnadji" onAction="#NadjiGlavniGrad" GridPane.rowIndex="0" GridPane.columnIndex="3" text="NADJI"/>
 

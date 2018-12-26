@@ -42,7 +42,7 @@ public class GrafikaController implements Initializable
         listaDrzava = FXCollections.observableArrayList();
         listaGradova = FXCollections.observableArrayList();
 
-        gdo=gdooo;
+        gdo = gdooo;
     }
 
     @Override
@@ -55,11 +55,11 @@ public class GrafikaController implements Initializable
         tcNazivDrzave.setCellValueFactory(new PropertyValueFactory<>("naziv_drzave"));
         tcIdDrzave.setCellValueFactory(new PropertyValueFactory<>("id_drzave"));
 
-        listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
-        listaDrzava.addAll(FXCollections.observableArrayList(gdo.drzave()));
-
         tvDrzava.setItems(listaDrzava);
         tvGradova.setItems(listaGradova);
+
+        listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
+        listaDrzava.addAll(FXCollections.observableArrayList(gdo.drzave()));
     }
 
 
@@ -78,7 +78,7 @@ public class GrafikaController implements Initializable
         {
             Alert upozori = new Alert(Alert.AlertType.WARNING);
             upozori.setTitle("UPOZORENJE");
-            upozori.setContentText("Unijeti grad ne postoji u bazi!");
+            upozori.setContentText("Unijeta drzava ne postoji u bazi!");
             upozori.showAndWait();
         }
         else
@@ -89,6 +89,8 @@ public class GrafikaController implements Initializable
 
     public void ObrisiDrzvuINjeneGradove(ActionEvent actionEvent)
     {
+        Drzava d = gdo.nadjiDrzavu(tfObrisi.getText());
+
         if(tfObrisi.getText().isEmpty() )
         {
             Alert upozori = new Alert(Alert.AlertType.WARNING);
@@ -96,12 +98,18 @@ public class GrafikaController implements Initializable
             upozori.setContentText("Niste unijeli drzavu u namjenjeno polje!");
             upozori.showAndWait();
         }
+        else if (d == null)
+        {
+            Alert upozori = new Alert(Alert.AlertType.WARNING);
+            upozori.setTitle("UPOZORENJE");
+            upozori.setContentText("Unijeta drzava ne postoji u bazi!");
+            upozori.showAndWait();
+        }
         else
         {
-            Drzava d = gdo.nadjiDrzavu(tfObrisi.getText());
             gdo.obrisiDrzavu(d.getNaziv());
 
-            izvrseno.setText("Dzrazava i njeni gradovi su izbrisani iz baze");
+            izvrseno.setText("Dzrzava "+d.getNaziv()+" i njeni gradovi su izbrisani iz baze!");
         }
 
 

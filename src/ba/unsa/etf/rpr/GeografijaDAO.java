@@ -544,6 +544,7 @@ public class GeografijaDAO
         catch (SQLException e)
         {
             e.printStackTrace();
+            return null;
         }
 
         return drz;
