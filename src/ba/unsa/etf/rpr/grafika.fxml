@@ -36,6 +36,8 @@
 
             <Button onAction="#DajIzvjestaj" text="%dajIzvjestaj" GridPane.rowIndex="4" />
 
+            <Label fx:id="izvrseno" GridPane.rowIndex="5"/>
+
          <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />

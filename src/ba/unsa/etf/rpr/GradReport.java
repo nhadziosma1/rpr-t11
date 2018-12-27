@@ -37,7 +37,8 @@ public class GradReport extends JFrame {
         this.setVisible(true);
     }
 
-    public void saveAs(String format, Connection conn) throws IOException, JRException {
+    public void saveAs(String format, Connection conn) throws IOException, JRException
+    {
         String reportSrcFile = getClass().getResource("/reports/gradovi.jrxml").getFile();
         String reportsDir = getClass().getResource("/reports/").getFile();
 
