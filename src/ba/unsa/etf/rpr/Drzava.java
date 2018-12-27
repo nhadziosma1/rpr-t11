@@ -2,9 +2,10 @@ package ba.unsa.etf.rpr;
 
 public class Drzava implements Comparable
 {
+
     private int id_drzave;
-    private String naziv_drzave;
-    private Grad glavni_grad;
+    private String naziv;
+    private Grad glavniGrad;
 
     public int getId_drzave() {
         return id_drzave;
@@ -15,19 +16,19 @@ public class Drzava implements Comparable
     }
 
     public String getNaziv() {
-        return naziv_drzave;
+        return naziv;
     }
 
     public void setNaziv(String naziv_drzave) {
-        this.naziv_drzave = naziv_drzave;
+        this.naziv = naziv_drzave;
     }
 
     public Grad getGlavniGrad() {
-        return glavni_grad;
+        return glavniGrad;
     }
 
     public void setGlavniGrad(Grad glavni_grad) {
-        this.glavni_grad = glavni_grad;
+        this.glavniGrad = glavni_grad;
     }
 
 

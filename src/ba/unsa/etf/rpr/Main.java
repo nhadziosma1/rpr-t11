@@ -57,10 +57,6 @@ public class Main extends Application
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("grafika.fxml"));
 
-        /*
-        OVAJ DIO SE NE PIŠE KADA JE POVEZAN CONTROLLER SA FXMLOM KROZ FXML FAJL
-        loader.setController(new GrafikaController());
-         */
         GeografijaDAO gdo = GeografijaDAO.getInstance();
 
         loader.setController(new GrafikaController(gdo));

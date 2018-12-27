@@ -3,9 +3,9 @@ package ba.unsa.etf.rpr;
 public class Grad implements Comparable<Grad>
 {
     private int id_grada;
-    private String naziv_grada;
-    private int broj_stanovnika;
-    private Drzava d;
+    private String naziv;
+    private int brojStanovnika;
+    private Drzava drzava;
 
     public int getId_grada() {
         return id_grada;
@@ -16,27 +16,27 @@ public class Grad implements Comparable<Grad>
     }
 
     public String getNaziv() {
-        return naziv_grada;
+        return naziv;
     }
 
     public void setNaziv(String naziv_grada) {
-        this.naziv_grada = naziv_grada;
+        this.naziv = naziv_grada;
     }
 
     public int getBrojStanovnika() {
-        return broj_stanovnika;
+        return brojStanovnika;
     }
 
     public void setBrojStanovnika(int broj_stanovnika) {
-        this.broj_stanovnika = broj_stanovnika;
+        this.brojStanovnika = broj_stanovnika;
     }
 
     public Drzava getDrzava() {
-        return d;
+        return drzava;
     }
 
     public void setDrzava(Drzava d) {
-        this.d = d;
+        this.drzava = d;
     }
 
 

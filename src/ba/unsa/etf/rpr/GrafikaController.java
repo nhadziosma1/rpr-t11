@@ -5,12 +5,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.Statement;
 import java.util.ResourceBundle;
+
+import static javafx.scene.layout.Region.USE_COMPUTED_SIZE;
 
 public class GrafikaController implements Initializable
 {
@@ -23,13 +28,11 @@ public class GrafikaController implements Initializable
     public TableColumn tcIdGrada;
     public TableColumn tcNazivGrada;
     public TableColumn tcBrojStanovnika;
-    public TableColumn tcIdOdgovoarajuceDrzave;
 
     public TableView<Drzava> tvDrzava;
     //kolone tabele2
     public TableColumn tcIdDrzave;
     public TableColumn tcNazivDrzave;
-    public TableColumn tcIdGlavnogGrada;
 
     private ObservableList<Grad> listaGradova;
     private ObservableList<Drzava> listaDrzava;
@@ -49,17 +52,17 @@ public class GrafikaController implements Initializable
     public void initialize(URL location, ResourceBundle resources)
     {
         tcIdGrada.setCellValueFactory(new PropertyValueFactory<>("id_grada"));
-        tcNazivGrada.setCellValueFactory(new PropertyValueFactory<>("naziv_grada"));
-        tcBrojStanovnika.setCellValueFactory(new PropertyValueFactory<>("broj_stanovnika"));
+        tcNazivGrada.setCellValueFactory(new PropertyValueFactory<>("naziv"));
+        tcBrojStanovnika.setCellValueFactory(new PropertyValueFactory<>("brojStanovnika"));
 
-        tcNazivDrzave.setCellValueFactory(new PropertyValueFactory<>("naziv_drzave"));
+        tcNazivDrzave.setCellValueFactory(new PropertyValueFactory<>("naziv"));
         tcIdDrzave.setCellValueFactory(new PropertyValueFactory<>("id_drzave"));
 
         tvDrzava.setItems(listaDrzava);
         tvGradova.setItems(listaGradova);
 
         listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
-        listaDrzava.addAll(FXCollections.observableArrayList(gdo.drzave()));
+        listaDrzava.addAll( FXCollections.observableArrayList(gdo.drzave()));
     }
 
 
@@ -112,8 +115,45 @@ public class GrafikaController implements Initializable
             izvrseno.setText("Dzrzava "+d.getNaziv()+" i njeni gradovi su izbrisani iz baze!");
             System.out.println("Broj gradova nakon izbacivanja drzave "+d.getNaziv()+" "+gdo.gradovi().size());
         }
+    }
 
+    public void DodajDrzavu(ActionEvent actionEvent)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajDrzavu.fxml"));
+        loader.setController(new dodajDrzavuController(gdo));
 
+        try
+        {
+            Parent root = loader.load();
 
+            Stage aboutStage = new Stage();
+            aboutStage.setTitle("Informacije o drzavi koja se dodaje");
+            aboutStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            aboutStage.show();
+        }
+        catch(Exception e)
+        {
+            System.out.println("nema about prozora");
+        }
+    }
+
+    public void DodajGrad(ActionEvent actionEvent)
+    {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajGrad.fxml"));
+        loader.setController(new dodajDrzavuController(gdo));
+
+        try
+        {
+            Parent root = loader.load();
+
+            Stage aboutStage = new Stage();
+            aboutStage.setTitle("Informacije o gradu koja se dodaje");
+            aboutStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
+            aboutStage.show();
+        }
+        catch(Exception e)
+        {
+            System.out.println("nema about prozora");
+        }
     }
 }

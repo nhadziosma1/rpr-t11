@@ -540,8 +540,41 @@ public class GeografijaDAO
             e.printStackTrace();
             return null;
         }
-
         return drz;
+    }
+    //////////////////////
+    public Grad nadjiGrad(String grad)
+    {
+        Grad grd = new Grad();
+        try
+        {
+            PreparedStatement ps = conn.prepareStatement("SELECT id, broj_stanovnika, drzava FROM grad WHERE naziv=?");
+            ps.setString(1, grad);
+
+            ResultSet result = ps.executeQuery();
+            grd.setNaziv(grad);
+
+            grd.setId_grada(result.getInt(1));
+            grd.setBrojStanovnika(result.getInt(2));
+
+            try
+            {
+                PreparedStatement st = conn.prepareStatement("select naziv from drzava where id=?");
+                st.setInt(1,result.getInt(3));
+                ResultSet rs = st.executeQuery();
+                grd.setDrzava(nadjiDrzavu(rs.getString(1)));
+            }
+            catch(Exception e)
+            {
+                grd.setDrzava(null);
+            }
+        }
+        catch(Exception e)
+        {
+            //e.printStackTrace();
+            return null;
+        }
+        return grd;
     }
 
 }
