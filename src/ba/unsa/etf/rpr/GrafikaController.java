@@ -122,8 +122,8 @@ public class GrafikaController implements Initializable
             listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
             listaDrzava.addAll( FXCollections.observableArrayList(gdo.drzave()));
 
-            izvrseno.setText("Dzrzava "+d.getNaziv()+" i njeni gradovi su izbrisani iz baze!");
-            System.out.println("Broj gradova nakon izbacivanja drzave "+d.getNaziv()+" "+gdo.gradovi().size());
+            izvrseno.setText("Dzrzava "+tfObrisi.getText()+" i njeni gradovi su izbrisani iz baze!");
+            System.out.println("Broj gradova nakon izbacivanja drzave "+tfObrisi.getText()+" "+gdo.gradovi().size());
         }
     }
 
@@ -222,9 +222,89 @@ public class GrafikaController implements Initializable
         }
     }
 
-
-    /*public void IzaberiJezik(ActionEvent actionEvent)
+    public void PromijeniNaBiH(ActionEvent actionEvent)
     {
+        Stage stejdz = (Stage) tvDrzava.getScene().getWindow();
+        ResourceBundle bundle= ResourceBundle.getBundle("Translation_bs");
 
-    }*/
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("grafika.fxml"), bundle);
+
+        loader.setController(new GrafikaController(gdo));
+        Parent root = null;
+        try
+        {
+            root = loader.load();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        stejdz.setScene(new Scene(root, PopupControl.USE_COMPUTED_SIZE, PopupControl.USE_COMPUTED_SIZE));
+        stejdz.show();
+
+    }
+
+    public void PromijeniNaEng(ActionEvent actionEvent)
+    {
+        Stage stejdz = (Stage) tvDrzava.getScene().getWindow();
+        ResourceBundle bundle= ResourceBundle.getBundle("Translation_eng_US");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("grafika.fxml"), bundle);
+
+        loader.setController(new GrafikaController(gdo));
+        Parent root = null;
+        try
+        {
+            root = loader.load();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        stejdz.setScene(new Scene(root, PopupControl.USE_COMPUTED_SIZE, PopupControl.USE_COMPUTED_SIZE));
+        stejdz.show();
+    }
+
+    public void PromijeniNaFra(ActionEvent actionEvent)
+    {
+        Stage stejdz = (Stage) tvDrzava.getScene().getWindow();
+        ResourceBundle bundle= ResourceBundle.getBundle("Translation_fr");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("grafika.fxml"), bundle);
+
+        loader.setController(new GrafikaController(gdo));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stejdz.setTitle("zadatak 2");
+        stejdz.setScene(new Scene(root, PopupControl.USE_COMPUTED_SIZE, PopupControl.USE_COMPUTED_SIZE));
+        stejdz.show();
+    }
+
+    public void PromijeniNaNjem(ActionEvent actionEvent)
+    {
+        Stage stejdz = (Stage) tvDrzava.getScene().getWindow();
+        ResourceBundle bundle= ResourceBundle.getBundle("Translation_de");
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("grafika.fxml"), bundle);
+
+        loader.setController(new GrafikaController(gdo));
+        Parent root = null;
+        try
+        {
+            root = loader.load();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        stejdz.setScene(new Scene(root, PopupControl.USE_COMPUTED_SIZE, PopupControl.USE_COMPUTED_SIZE));
+        stejdz.show();
+    }
 }

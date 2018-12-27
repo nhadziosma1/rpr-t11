@@ -115,10 +115,10 @@
 
                 <Menu text="Languages" >
                    <items>
-                      <MenuItem fx:id="bosanski" mnemonicParsing="true" text="bosanski" />
-                       <MenuItem fx:id="engleski" mnemonicParsing="true"  text="engleski"/>
-                       <MenuItem fx:id="francuski" mnemonicParsing="true"  text="francuski"/>
-                       <MenuItem fx:id="njmacki" mnemonicParsing="true" text="njemacki"/>
+                      <MenuItem fx:id="bos" mnemonicParsing="true" text="bosanski" onAction="#PromijeniNaBiH"/>
+                       <MenuItem fx:id="engl" mnemonicParsing="true"  text="engleski" onAction="#PromijeniNaEng"/>
+                       <MenuItem fx:id="fran" mnemonicParsing="true"  text="francuski" onAction="#PromijeniNaFra"/>
+                       <MenuItem fx:id="njm" mnemonicParsing="true" text="njemacki" onAction="#PromijeniNaNjem"/>
                    </items>
                 </Menu>
 
