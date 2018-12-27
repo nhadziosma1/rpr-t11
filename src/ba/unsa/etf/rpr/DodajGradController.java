@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -40,7 +41,9 @@ public class DodajGradController implements Initializable
         }
         else
         {
-            
+
+            /*Stage stejdz = (Stage)tfBrojStanovnikaGlavnogGrada.getScene().getWindow();
+            stejdz.close();*/
         }
     }
 }
