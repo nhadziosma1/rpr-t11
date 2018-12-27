@@ -9,8 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Statement;
 import java.util.ResourceBundle;
@@ -125,6 +129,9 @@ public class GrafikaController implements Initializable
 
     public void DodajDrzavu(ActionEvent actionEvent)
     {
+        /*ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajDrzavu.fxml"), bundle);*/
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajDrzavu.fxml"));
         loader.setController(new dodajDrzavuController(gdo));
 
@@ -150,6 +157,9 @@ public class GrafikaController implements Initializable
 
     public void DodajGrad(ActionEvent actionEvent)
     {
+
+        /*ResourceBundle bundle = ResourceBundle.getBundle("Translation");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajGrad.fxml"), bundle);*/
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajGrad.fxml"));
         loader.setController(new DodajGradController(gdo));
 
@@ -171,5 +181,50 @@ public class GrafikaController implements Initializable
         {
             System.out.println("nesto ne valja pri otvaranju prozora za dodavanje grada");
         }
+    }
+
+    public void DajIzvjestaj(ActionEvent actionEvent)
+    {
+        try
+        {
+            new GradReport().showReport(gdo.getConn());
+        }
+        catch (JRException e1)
+        {
+            e1.printStackTrace();
+        }
+
+    }
+
+    public void Spasi(ActionEvent actionEvent)
+    {
+        FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter extFilter1 = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+        FileChooser.ExtensionFilter extFilter2 = new FileChooser.ExtensionFilter("DOCX files (*.docx)", "*.docx");
+        FileChooser.ExtensionFilter extFilter3 = new FileChooser.ExtensionFilter("XSLX files (*.xslx)", "*.xslx");
+        fileChooser.getExtensionFilters().addAll(extFilter1, extFilter2, extFilter3);
+        fileChooser.setInitialDirectory(new File(System.getProperty("user.dir")));
+        Stage stage = (Stage) tvDrzava.getScene().getWindow();
+        File file = fileChooser.showSaveDialog(stage);
+        if (file != null)
+            doSave(file);
+    }
+
+    private void doSave(File datoteka)
+    {
+        try
+        {
+            new GradReport().saveAs(datoteka.getAbsolutePath(), gdo.getConn());
+        }
+        catch (JRException | IOException greska)
+        {
+            System.out.println(greska.getMessage());
+        }
+    }
+
+
+    public void IzaberiJezik(ActionEvent actionEvent)
+    {
+
     }
 }

@@ -576,5 +576,7 @@ public class GeografijaDAO
         }
         return grd;
     }
-
+    public Connection getConn(){
+        return conn;
+    }
 }

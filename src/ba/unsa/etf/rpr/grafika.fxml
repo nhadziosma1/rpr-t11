@@ -1,62 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-
-
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.Button?>
-
-<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
 <!--fx:controller="ba.unsa.etf.rpr.GrafikaController"-->
+
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <GridPane>
-            <Label fx:id="lbGgrad" text="Unesite drzavu ciji zelite glavni grad:"/>
-            <TextField fx:id="tfGGrad" GridPane.columnIndex="1"/>
-            <Button fx:id="bGGnadji" onAction="#NadjiGlavniGrad" GridPane.rowIndex="0" GridPane.columnIndex="3" text="NADJI"/>
+            <Label fx:id="lbGgrad" text="%l1" />
+            <TextField fx:id="tfGGrad" GridPane.columnIndex="1" />
+            <Button fx:id="bGGnadji" onAction="#NadjiGlavniGrad" text="%nadji" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-            <Label fx:id="lbObr" text="Unesi drzavu koju zelite obrisati" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-            <TextField fx:id="tfObrisi" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-            <Button fx:id="bObrisi" onAction="#ObrisiDrzvuINjeneGradove" GridPane.rowIndex="1" GridPane.columnIndex="3" text="OBRISI"/>
+            <Label fx:id="lbObr" text="%l2" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <TextField fx:id="tfObrisi" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="bObrisi" onAction="#ObrisiDrzvuINjeneGradove" text="%obrisi" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-            <Label text="Pritisni da bi dodao novu drzavu: " GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <Button fx:id="bDodajDrzavu" onAction="#DodajDrzavu" GridPane.rowIndex="2" GridPane.columnIndex="1" text="DODAJ DRZAVU"/>
+            <Label text="%l3" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+            <Button fx:id="bDodajDrzavu" onAction="#DodajDrzavu" text="%dodajdrzavu" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <Label text="Pritisni da bi dodao novi grad: " GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <Button fx:id="bDodaj" onAction="#DodajGrad" GridPane.rowIndex="3" GridPane.columnIndex="1" text="DODAJ GRAD"/>
+            <Label text="%l4" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+            <Button fx:id="bDodaj" onAction="#DodajGrad" text="%dodajGrad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+            <Button onAction="#DajIzvjestaj" text="%dajIzvjestaj" GridPane.rowIndex="4"/>
+
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
     </top>
 
     <center>
         <GridPane>
-            <TableView fx:id="tvGradova"  maxHeight="120" GridPane.rowIndex="1">
+            <TableView fx:id="tvGradova" maxHeight="120" GridPane.rowIndex="1">
                 <columns>
-                    <TableColumn fx:id="tcIdGrada" text="id grada" prefWidth="150" />
-                    <TableColumn fx:id="tcNazivGrada" text="naziv grada" prefWidth="150"/>
-                    <TableColumn fx:id="tcBrojStanovnika" text="broj stanovnika" prefWidth="150"/>
+                    <TableColumn fx:id="tcIdGrada" prefWidth="150" text="%idGrada" />
+                    <TableColumn fx:id="tcNazivGrada" prefWidth="150" text="%nazivGrada" />
+                    <TableColumn fx:id="tcBrojStanovnika" prefWidth="150" text="%brojStanovnika" />
                 </columns>
             </TableView>
 
             <TableView fx:id="tvDrzava" maxHeight="120" GridPane.rowIndex="15">
                 <columns>
-                    <TableColumn fx:id="tcIdDrzave" text="id drzave" prefWidth="150" />
-                    <TableColumn fx:id="tcNazivDrzave" text="naziv drzave" prefWidth="150"/>
+                    <TableColumn fx:id="tcIdDrzave" prefWidth="150" text="%idDrzave" />
+                    <TableColumn fx:id="tcNazivDrzave" prefWidth="150" text="%nazivDrzave" />
                 </columns>
             </TableView>
+         <columnConstraints>
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
     </center>
 
     <bottom>
-        <Label fx:id="izvrseno" text=" "/>
+        <MenuBar>
+            <Menu text="_File" mnemonicParsing="flase">
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                </accelerator>
+
+                <MenuItem fx:id="menuSave" text="_Save" mnemonicParsing="true" onAction="#Spasi">
+                    <accelerator>
+                        <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                    </accelerator>
+                </MenuItem>
+
+            </Menu>
+
+            <Menu text="_View">
+
+                <accelerator>
+                    <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                </accelerator>
+
+                <MenuItem fx:id="menuView" text="Izaberi Jezik" mnemonicParsing="true" onAction="#IzaberiJezik"/>
+            </Menu>
+        </MenuBar>
     </bottom>
 
     <padding>
-        <Insets top="20" bottom="20" right="20" left="20"/>
+        <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
 </BorderPane>
