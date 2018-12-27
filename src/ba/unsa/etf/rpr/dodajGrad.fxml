@@ -6,7 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<!-- fx:controller="ba.unsa.etf.rpr.dodajDrzavuController"-->
+<!--fx:controller="ba.unsa.etf.rpr.DodajGradController"-->
+
 <?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefHeight="400.0" prefWidth="600.0">
 
@@ -27,13 +28,16 @@
         <RowConstraints vgrow="ALWAYS"/>
     </rowConstraints>
 
-    <Label fx:id="nazivDrzave" GridPane.rowIndex="1" GridPane.columnIndex="0" text="Naziv drzave: " />
-    <TextField fx:id="tfNazivDrzave" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+    <Label fx:id="nazivGrada" GridPane.rowIndex="1" GridPane.columnIndex="0" text="Naziv grada: " />
+    <TextField fx:id="tfNazivGrada" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-    <Label fx:id="glavniGrad" GridPane.rowIndex="2" GridPane.columnIndex="0" text="Glavni grad: " />
-    <TextField fx:id="tfGlavniGrad" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+    <Label fx:id="brojStanovinka" GridPane.rowIndex="2" GridPane.columnIndex="0" text="Broj stanovnika: " />
+    <TextField fx:id="tfBrojStanovnika" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-    <Button fx:id="btDodaj" text="DODAJ DRZAVU" onAction="#DodajDrzavu"/>
+    <Label fx:id="gradDrzava" GridPane.rowIndex="3" GridPane.columnIndex="0" text="Drzava: " />
+    <TextField fx:id="tfGradDrzava" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+    <Button fx:id="btDodaj" text="DODAJ GRAD" onAction="#DodajGrad"/>
 
     <padding>
         <Insets top="20" bottom="20" left="20" right="20"/>

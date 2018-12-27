@@ -112,6 +112,12 @@ public class GrafikaController implements Initializable
         {
             gdo.obrisiDrzavu(d.getNaziv());
 
+            //ZASTO SE NE POZOVE INITIALIZE, NEGO OVO MORAM RUCNO PISAT?????????
+            listaDrzava.clear();
+            listaGradova.clear();
+            listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
+            listaDrzava.addAll( FXCollections.observableArrayList(gdo.drzave()));
+
             izvrseno.setText("Dzrzava "+d.getNaziv()+" i njeni gradovi su izbrisani iz baze!");
             System.out.println("Broj gradova nakon izbacivanja drzave "+d.getNaziv()+" "+gdo.gradovi().size());
         }
@@ -133,14 +139,14 @@ public class GrafikaController implements Initializable
         }
         catch(Exception e)
         {
-            System.out.println("nema about prozora");
+            System.out.println("ne ucitava se za dodavanje");
         }
     }
 
     public void DodajGrad(ActionEvent actionEvent)
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("dodajGrad.fxml"));
-        loader.setController(new dodajDrzavuController(gdo));
+        loader.setController(new DodajGradController(gdo));
 
         try
         {
@@ -153,7 +159,7 @@ public class GrafikaController implements Initializable
         }
         catch(Exception e)
         {
-            System.out.println("nema about prozora");
+            System.out.println("nesto ne valja pri otvaranju prozora za dodavanje grada");
         }
     }
 }
