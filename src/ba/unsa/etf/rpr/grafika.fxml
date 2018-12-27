@@ -3,9 +3,13 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -13,11 +17,6 @@
 
 <!--fx:controller="ba.unsa.etf.rpr.GrafikaController"-->
 
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.input.KeyCodeCombination?>
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
     <top>
         <GridPane>
@@ -35,7 +34,7 @@
             <Label text="%l4" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <Button fx:id="bDodaj" onAction="#DodajGrad" text="%dodajGrad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <Button onAction="#DajIzvjestaj" text="%dajIzvjestaj" GridPane.rowIndex="4"/>
+            <Button onAction="#DajIzvjestaj" text="%dajIzvjestaj" GridPane.rowIndex="4" />
 
          <columnConstraints>
             <ColumnConstraints />
@@ -44,6 +43,7 @@
             <ColumnConstraints />
          </columnConstraints>
          <rowConstraints>
+            <RowConstraints />
             <RowConstraints />
             <RowConstraints />
             <RowConstraints />
@@ -94,12 +94,12 @@
 
     <bottom>
         <MenuBar>
-            <Menu text="_File" mnemonicParsing="flase">
+            <Menu mnemonicParsing="flase" text="_File">
                 <accelerator>
                     <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
 
-                <MenuItem fx:id="menuSave" text="_Save" mnemonicParsing="true" onAction="#Spasi">
+                <MenuItem fx:id="menuSave" mnemonicParsing="true" onAction="#Spasi" text="_Save">
                     <accelerator>
                         <KeyCodeCombination alt="UP" code="S" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                     </accelerator>
@@ -113,7 +113,15 @@
                     <KeyCodeCombination alt="UP" code="V" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
                 </accelerator>
 
-                <MenuItem fx:id="menuView" text="Izaberi Jezik" mnemonicParsing="true" onAction="#IzaberiJezik"/>
+                <Menu text="Languages" >
+                   <items>
+                      <MenuItem fx:id="bosanski" mnemonicParsing="true" text="bosanski" />
+                       <MenuItem fx:id="engleski" mnemonicParsing="true"  text="engleski"/>
+                       <MenuItem fx:id="francuski" mnemonicParsing="true"  text="francuski"/>
+                       <MenuItem fx:id="njmacki" mnemonicParsing="true" text="njemacki"/>
+                   </items>
+                </Menu>
+
             </Menu>
         </MenuBar>
     </bottom>

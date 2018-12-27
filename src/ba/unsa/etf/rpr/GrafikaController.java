@@ -223,8 +223,8 @@ public class GrafikaController implements Initializable
     }
 
 
-    public void IzaberiJezik(ActionEvent actionEvent)
+    /*public void IzaberiJezik(ActionEvent actionEvent)
     {
 
-    }
+    }*/
 }
