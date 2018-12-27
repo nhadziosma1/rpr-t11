@@ -26,6 +26,7 @@ public class GrafikaController implements Initializable
     public TextField tfGGrad;
     public TextField tfObrisi;
     public Label izvrseno;
+    public TextField tfZaIzvjestajDrzava;
 
     public TableView<Grad> tvGradova;
     //kolone tabele
@@ -187,7 +188,7 @@ public class GrafikaController implements Initializable
     {
         try
         {
-            new GradReport().showReport(gdo.getConn());
+           new GradReport().showReport(gdo.getConn(), null);
         }
         catch (JRException e1)
         {
@@ -306,5 +307,17 @@ public class GrafikaController implements Initializable
 
         stejdz.setScene(new Scene(root, PopupControl.USE_COMPUTED_SIZE, PopupControl.USE_COMPUTED_SIZE));
         stejdz.show();
+    }
+
+    public void DajIzvjestajZaJednuDrzavu(ActionEvent actionEvent)
+    {
+        try
+        {
+            new GradReport().showReport(gdo.getConn(), gdo.nadjiDrzavu(tfZaIzvjestajDrzava.getText()) );
+        }
+        catch (JRException e1)
+        {
+            e1.printStackTrace();
+        }
     }
 }

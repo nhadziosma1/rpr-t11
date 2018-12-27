@@ -34,9 +34,12 @@
             <Label text="%l4" GridPane.columnIndex="0" GridPane.rowIndex="3" />
             <Button fx:id="bDodaj" onAction="#DodajGrad" text="%dodajGrad" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <Button onAction="#DajIzvjestaj" text="%dajIzvjestaj" GridPane.rowIndex="4" />
+            <Button onAction="#DajIzvjestaj" text="%dajIzvjestaj" GridPane.rowIndex="4" GridPane.columnIndex="1" />
 
             <Label fx:id="izvrseno" GridPane.rowIndex="5"/>
+
+            <TextField fx:id="tfZaIzvjestajDrzava" GridPane.rowIndex="6" />
+            <Button onAction="#DajIzvjestajZaJednuDrzavu" text="%dajIzvjestaj" GridPane.rowIndex="6" GridPane.columnIndex="1" />
 
          <columnConstraints>
             <ColumnConstraints />
