@@ -41,9 +41,16 @@ public class DodajGradController implements Initializable
         }
         else
         {
+            Grad g = new Grad();
+            g.setNaziv(tfNazivGrada.getText());
+            g.setBrojStanovnika(Integer.parseInt(tfBrojStanovnika.getText()) );
 
-            /*Stage stejdz = (Stage)tfBrojStanovnikaGlavnogGrada.getScene().getWindow();
-            stejdz.close();*/
+            Drzava d = new Drzava();
+
+            gdo.dodajGrad(g);
+
+            ((Stage)tfNazivGrada.getScene().getWindow()).close();
+
         }
     }
 }

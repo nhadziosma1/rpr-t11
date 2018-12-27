@@ -161,6 +161,11 @@ public class GrafikaController implements Initializable
             aboutStage.setTitle("Informacije o gradu koja se dodaje");
             aboutStage.setScene(new Scene(root, USE_COMPUTED_SIZE, USE_COMPUTED_SIZE));
             aboutStage.show();
+
+            listaDrzava.clear();
+            listaGradova.clear();
+            listaGradova.addAll(FXCollections.observableArrayList(gdo.gradovi()));
+            listaDrzava.addAll( FXCollections.observableArrayList(gdo.drzave()));
         }
         catch(Exception e)
         {

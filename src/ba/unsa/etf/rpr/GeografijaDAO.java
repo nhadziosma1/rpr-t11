@@ -470,7 +470,7 @@ public class GeografijaDAO
             PreparedStatement dodajDarzavu = conn.prepareStatement("INSERT INTO drzava VALUES (?, ?, ?)");
             dodajDarzavu.setInt(1, d.getId_drzave());
             dodajDarzavu.setString(2, d.getNaziv());
-            dodajDarzavu.setInt( 3, d.getGlavniGrad().getId_grada() );
+            dodajDarzavu.setInt( 3, d.getGlavniGrad().getId_grada());
 
             dodajDarzavu.executeUpdate();
         }
