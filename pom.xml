@@ -39,7 +39,7 @@
             <email> nhadziosma1@etf.unsa.ba </email>
 
             <organization>
-                Univerzitet u Sarajevu, ELektrotehnicki fakultet, Odsjek za racunarstvo i ingformatiku
+                Univerzitet u Sarajevu, Elektrotehnicki fakultet, Odsjek za racunarstvo i ingformatiku
             </organization>
             <organizationUrl> http://www.etf.unsa.ba </organizationUrl>
 
@@ -53,13 +53,6 @@
 
     <!--Sve biblioteke koje su potrebene za realizaciju ovog projekta-->
     <dependencies>
-
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.11</version>
-        </dependency>
-
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
@@ -71,14 +64,13 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.21.0</version>
         </dependency>
-    
     </dependencies>
 
     <!-- Skoro svaka akcija nad projektom se izvrsva u sekciji "plugins" kao sto su kompajliranje, pravljenje jar fajlova
          napraviti dokumentaciju za kod, unite testiranje... -->
     <build>
         <plugins>
-            <!-- Plugin za kompajliranje (promijenio sa 10, na verziju 1.8) -->
+            <!-- Plugin za kompajliranje (promijenio sa 10, na verziju 1.8 i dodao tag za verziju plagina) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -86,6 +78,7 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+                <version>3.8.0</version>
             </plugin>
 
             <!-- Dodaje podrsku za Unit testiranje-->
@@ -106,25 +99,6 @@
                         <version>5.3.0</version>
                     </dependency>
                 </dependencies>
-            </plugin>
-
-            <!-- biblioteke koje sam ja dodavao-->
-            <plugin>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.11</version>
-            </plugin>
-
-            <plugin>
-                <groupId>net.sf.jasperreports</groupId>
-                <artifactId>jasperreports</artifactId>
-                <version>6.7.0</version>
-            </plugin>
-
-            <plugin>
-                <groupId>org.xerial</groupId>
-                <artifactId>sqlite-jdbc</artifactId>
-                <version>3.21.0</version>
             </plugin>
 
             <!-- PLugin koji daje podrsku za pokrivenost testovima -->
@@ -153,6 +127,7 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
+                        <!-- Ovaj dio koda govori koji od nonih sa strane treba da se pokrene da bise generisao FAT jar-->
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
@@ -165,7 +140,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>ba.unsa.etf.rpr.rpr-t11.src.Main</mainClass>
+                            <mainClass>ba.unsa.etf.rpr.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
